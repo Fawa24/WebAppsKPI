@@ -1,11 +1,17 @@
 using Lab_1.Interfaces;
 using Lab_1.Services;
+using Lab_2.Databases;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddSingleton<IAuthorsService, AuthorService>();
-builder.Services.AddSingleton<IBooksService, BooksService>();
+builder.Services.AddDbContext<BooksDbContext>(options =>
+{
+	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+builder.Services.AddScoped<IAuthorsService, AuthorService>();
+builder.Services.AddScoped<IBooksService, BooksService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

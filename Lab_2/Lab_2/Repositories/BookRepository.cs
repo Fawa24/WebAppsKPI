@@ -26,7 +26,7 @@ namespace Lab_2.Repositories
 
 		public async Task<bool> DeleteBookById(string id)
 		{
-			var bookToRemove = await _db.Books.FirstOrDefaultAsync(y => y.Id == id);
+			var bookToRemove = await _db.Books.FindAsync(id);
 			if (bookToRemove != null)
 			{
 				_db.Books.Remove(bookToRemove);
@@ -48,7 +48,7 @@ namespace Lab_2.Repositories
 
 		public async Task<bool> DeleteAuthorById(string id)
 		{
-			var autorToRemove = await _db.Authors.FirstOrDefaultAsync(y => y.Id == id);
+			var autorToRemove = await _db.Authors.FindAsync(id);
 			if (autorToRemove != null)
 			{
 				_db.Authors.Remove(autorToRemove);
@@ -66,15 +66,9 @@ namespace Lab_2.Repositories
 
 		public async Task<bool> UpdateBook(Book book)
 		{
-			var bookToUpdate = await _db.Books.FirstOrDefaultAsync(x => x.Id == book.Id);
-			if (bookToUpdate != null)
-			{
-				bookToUpdate.Name = book.Name;
-				bookToUpdate.Author = book.Author;
-				await _db.SaveChangesAsync();
-				return true;
-			}
-			return false;
+			_db.Books.Update(book);
+			await _db.SaveChangesAsync();
+			return true;
 		}
 
 		public async Task AddAuthor(Author author)
@@ -85,14 +79,9 @@ namespace Lab_2.Repositories
 
 		public async Task<bool> UpdateAuthor(Author author)
 		{
-			var authorToUpdate = await _db.Authors.FirstOrDefaultAsync(x => x.Id == author.Id);
-			if (authorToUpdate != null)
-			{
-				authorToUpdate.Name = author.Name;
-				await _db.SaveChangesAsync();
-				return true;
-			}
-			return false;
+			_db.Authors.Update(author);
+			await _db.SaveChangesAsync();
+			return true;
 		}
 	}
 }

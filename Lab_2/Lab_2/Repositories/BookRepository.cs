@@ -16,7 +16,7 @@ namespace Lab_2.Repositories
 
 		public async Task<List<Book>> GetAllBooks()
 		{
-			return await _db.Books.ToListAsync();
+			return await _db.Books.Include(x => x.Author).ToListAsync();
 		}
 
 		public async Task<Book?> GetBookById(string id)

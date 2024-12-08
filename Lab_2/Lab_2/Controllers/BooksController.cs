@@ -1,5 +1,6 @@
 ﻿using Lab_1.Interfaces;
-using Lab_1.Models;
+using Lab_2.Filters;
+using Lab_2.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab_1.Controllers
@@ -18,7 +19,7 @@ namespace Lab_1.Controllers
 		/// </summary>
 		/// <returns>All the books from the storage</returns>
 		[HttpGet("books/")]
-		public async Task<ActionResult<List<Book>>> GetAllBooksAsync()
+		public async Task<ActionResult<List<GetBookDTO>>> GetAllBooksAsync()
 		{
 			return Ok(await _booksService.GetAllBooks());
 		}
@@ -29,7 +30,7 @@ namespace Lab_1.Controllers
 		/// <param name="id">ID of the book to return</param>
 		/// <returns>Book with the specified ID</returns>
 		[HttpGet("books/{id}")]
-		public async Task<ActionResult<Book>> GetBookById(string id)
+		public async Task<ActionResult<GetBookDTO>> GetBookById(string id)
 		{
 			var book = await _booksService.GetBookById(id);
 
@@ -44,10 +45,11 @@ namespace Lab_1.Controllers
 		/// <summary>
 		/// Adds new book to the storage
 		/// </summary>
-		/// <param name="author">Book to add</param>
+		/// <param name="book">Book to add</param>
 		/// <returns>Nothing</returns>
 		[HttpPost("books/")]
-		public async Task<ActionResult> AddBook([FromBody] Book book)
+		[ValidationFilter]
+		public async Task<ActionResult> AddBook([FromBody] AddBookDTO book)
 		{
 			if (await _booksService.AddBook(book))
 			{
@@ -77,12 +79,12 @@ namespace Lab_1.Controllers
 		/// Updates book's info
 		/// </summary>
 		/// <param name="book">New book's fields</param>
-		/// <param name="id">ID of the book to update</param>
 		/// <returns>Nothing</returns>
 		[HttpPut("books/{id}")]
-		public async Task<ActionResult> UpdateBookAsync([FromBody] Book book, string id)
+		[ValidationFilter]
+		public async Task<ActionResult> UpdateBookAsync([FromBody] UpdateBookDTO book, string id)
 		{
-			if (await _booksService.UpdateBook(book, id))
+			if (await _booksService.UpdateBook(id, book))
 			{
 				return Ok("Updated successfuly");
 			}

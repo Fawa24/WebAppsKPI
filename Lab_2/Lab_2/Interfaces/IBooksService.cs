@@ -1,13 +1,13 @@
-﻿using Lab_1.Models;
+﻿using Lab_2.Models.DTOs;
 
 namespace Lab_1.Interfaces
 {
 	public interface IBooksService
 	{
-		public Task<List<Book>> GetAllBooks();
-		public Task<Book?> GetBookById(string id);
+		public Task<List<GetBookDTO>> GetAllBooks();
+		public Task<GetBookDTO?> GetBookById(string id);
 		public Task<bool> DeleteBookById(string id);
-		public Task<bool> AddBook(Book book);
-		public Task<bool> UpdateBook(Book book, string bookId);
+		public Task<bool> AddBook(AddBookDTO book);
+		public Task<bool> UpdateBook(string id, UpdateBookDTO book);
 	}
 }

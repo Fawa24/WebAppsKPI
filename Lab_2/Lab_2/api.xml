@@ -17,7 +17,7 @@
             <param name="id">ID of the author to return</param>
             <returns>Author with the specified ID</returns>
         </member>
-        <member name="M:Lab_1.Controllers.AuthorsController.AddAuthorAsync(Lab_1.Models.Author)">
+        <member name="M:Lab_1.Controllers.AuthorsController.AddAuthorAsync(Lab_2.Models.DTOs.AddAuthorDTO)">
             <summary>
             Adds new author to the storage
             </summary>
@@ -31,12 +31,11 @@
             <param name="id">ID of the author to delete</param>
             <returns>Nothing</returns>
         </member>
-        <member name="M:Lab_1.Controllers.AuthorsController.UpdateAuthorAsync(Lab_1.Models.Author,System.String)">
+        <member name="M:Lab_1.Controllers.AuthorsController.UpdateAuthorAsync(Lab_2.Models.DTOs.UpdateAuthorDTO,System.String)">
             <summary>
             Updates author's info
             </summary>
             <param name="author">New author's fileds</param>
-            <param name="id">ID of the author to update</param>
             <returns>Nothing</returns>
         </member>
         <member name="M:Lab_1.Controllers.BooksController.GetAllBooksAsync">
@@ -52,11 +51,11 @@
             <param name="id">ID of the book to return</param>
             <returns>Book with the specified ID</returns>
         </member>
-        <member name="M:Lab_1.Controllers.BooksController.AddBook(Lab_1.Models.Book)">
+        <member name="M:Lab_1.Controllers.BooksController.AddBook(Lab_2.Models.DTOs.AddBookDTO)">
             <summary>
             Adds new book to the storage
             </summary>
-            <param name="author">Book to add</param>
+            <param name="book">Book to add</param>
             <returns>Nothing</returns>
         </member>
         <member name="M:Lab_1.Controllers.BooksController.DeleteBookById(System.String)">
@@ -66,12 +65,11 @@
             <param name="id">ID of the book to delete</param>s
             <returns>Nothing</returns>
         </member>
-        <member name="M:Lab_1.Controllers.BooksController.UpdateBookAsync(Lab_1.Models.Book,System.String)">
+        <member name="M:Lab_1.Controllers.BooksController.UpdateBookAsync(Lab_2.Models.DTOs.UpdateBookDTO,System.String)">
             <summary>
             Updates book's info
             </summary>
             <param name="book">New book's fields</param>
-            <param name="id">ID of the book to update</param>
             <returns>Nothing</returns>
         </member>
         <member name="T:Lab_2.Databases.Migrations.InitialMigration">

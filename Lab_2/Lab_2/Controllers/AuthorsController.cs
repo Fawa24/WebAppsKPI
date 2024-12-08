@@ -1,5 +1,6 @@
 ﻿using Lab_1.Interfaces;
-using Lab_1.Models;
+using Lab_2.Filters;
+using Lab_2.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab_1.Controllers
@@ -18,7 +19,7 @@ namespace Lab_1.Controllers
 		/// </summary>
 		/// <returns>All the authors from the storage</returns>
 		[HttpGet("authors/")]
-		public async Task<ActionResult<List<Author>>> GetAllAuthorsAsync()
+		public async Task<ActionResult<List<GetAuthorDTO>>> GetAllAuthorsAsync()
 		{
 			return Ok(await _authorsService.GetAllAuthors());
 		}
@@ -29,7 +30,7 @@ namespace Lab_1.Controllers
 		/// <param name="id">ID of the author to return</param>
 		/// <returns>Author with the specified ID</returns>
 		[HttpGet("authors/{id}")]
-		public async Task<ActionResult<Author>> GetAuthorByIdAsync(string id)
+		public async Task<ActionResult<GetAuthorDTO>> GetAuthorByIdAsync(string id)
 		{
 			var author = await _authorsService.GetAuthorById(id);
 
@@ -47,7 +48,8 @@ namespace Lab_1.Controllers
 		/// <param name="author">Author to add</param>
 		/// <returns>Nothing</returns>
 		[HttpPost("authors/")]
-		public async Task<ActionResult> AddAuthorAsync([FromBody] Author author)
+		[ValidationFilter]
+		public async Task<ActionResult> AddAuthorAsync([FromBody] AddAuthorDTO author)
 		{
 			if (await _authorsService.AddAuthor(author))
 			{
@@ -77,16 +79,16 @@ namespace Lab_1.Controllers
 		/// Updates author's info
 		/// </summary>
 		/// <param name="author">New author's fileds</param>
-		/// <param name="id">ID of the author to update</param>
 		/// <returns>Nothing</returns>
 		[HttpPut("authors/{id}")]
-		public async Task<ActionResult> UpdateAuthorAsync([FromBody] Author author, string id)
+		[ValidationFilter]
+		public async Task<ActionResult> UpdateAuthorAsync([FromBody] UpdateAuthorDTO author, string id)
 		{
-			if (await _authorsService.UpdateAuthor(author, id))
+			if (await _authorsService.UpdateAuthor(id, author))
 			{
 				return Ok("Updated successfuly");
 			}
-			return BadRequest($"Invalid input: no author was found");
+			return BadRequest($"Something went wrong");
 		}
 	}
 }

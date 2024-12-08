@@ -2,15 +2,20 @@
 using Lab_2.Filters;
 using Lab_2.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Lab_1.Controllers
 {
 	public class AuthorsController : ControllerBase
 	{
+		private readonly IMemoryCache _cache;
 		private readonly IAuthorsService _authorsService;
+		private readonly string AuthorsCacheKey = "authors_list";
 
-		public AuthorsController(IAuthorsService authorsService)
+		public AuthorsController(IMemoryCache cache
+			, IAuthorsService authorsService)
 		{
+			_cache = cache;
 			_authorsService = authorsService;
 		}
 
@@ -21,7 +26,16 @@ namespace Lab_1.Controllers
 		[HttpGet("authors/")]
 		public async Task<ActionResult<List<GetAuthorDTO>>> GetAllAuthorsAsync()
 		{
-			return Ok(await _authorsService.GetAllAuthors());
+			if (_cache.TryGetValue(AuthorsCacheKey, out List<GetAuthorDTO> authors))
+			{
+				return Ok(authors);
+			}
+
+			authors = await _authorsService.GetAllAuthors();
+
+			_cache.Set(AuthorsCacheKey, authors, TimeSpan.FromMinutes(5));
+
+			return Ok(authors);
 		}
 
 		/// <summary>
@@ -53,6 +67,7 @@ namespace Lab_1.Controllers
 		{
 			if (await _authorsService.AddAuthor(author))
 			{
+				_cache.Remove(AuthorsCacheKey);
 				return Ok("Added successfully");
 			}
 
@@ -69,6 +84,7 @@ namespace Lab_1.Controllers
 		{
 			if (await _authorsService.DeleteAuthorById(id))
 			{
+				_cache.Remove(AuthorsCacheKey);
 				return Ok("Deleted successfully");
 			}
 
@@ -86,6 +102,7 @@ namespace Lab_1.Controllers
 		{
 			if (await _authorsService.UpdateAuthor(id, author))
 			{
+				_cache.Remove(AuthorsCacheKey);
 				return Ok("Updated successfuly");
 			}
 			return BadRequest($"Something went wrong");

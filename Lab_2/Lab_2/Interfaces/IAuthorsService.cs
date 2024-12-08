@@ -4,10 +4,10 @@ namespace Lab_1.Interfaces
 {
 	public interface IAuthorsService
 	{
-		public List<Author> GetAllAuthors();
-		public Author? GetAuthorById(string id);
-		public bool DeleteAuthorById(string id);
-		public bool AddAuthor(Author author);
-		public bool UpdateAuthor(Author author, string authorId);
+		public Task<List<Author>> GetAllAuthors();
+		public Task<Author?> GetAuthorById(string id);
+		public Task<bool> DeleteAuthorById(string id);
+		public Task<bool> AddAuthor(Author author);
+		public Task<bool> UpdateAuthor(Author author, string authorId);
 	}
 }

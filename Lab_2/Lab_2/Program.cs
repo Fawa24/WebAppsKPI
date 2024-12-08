@@ -1,6 +1,8 @@
 using Lab_1.Interfaces;
 using Lab_1.Services;
 using Lab_2.Databases;
+using Lab_2.Interfaces;
+using Lab_2.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,7 @@ builder.Services.AddDbContext<BooksDbContext>(options =>
 {
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IAuthorsService, AuthorService>();
 builder.Services.AddScoped<IBooksService, BooksService>();
 builder.Services.AddEndpointsApiExplorer();

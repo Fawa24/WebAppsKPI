@@ -1,68 +1,43 @@
 ﻿using Lab_1.Interfaces;
 using Lab_1.Models;
+using Lab_2.Interfaces;
 
 namespace Lab_1.Services
 {
 	public class AuthorService : IAuthorsService
 	{
-		private List<Author> _authors;
+		private readonly IBookRepository _bookRepository;
 
-		public AuthorService()
+		public AuthorService(IBookRepository bookRepository)
 		{
-			_authors =
-			[
-				new Author
-				{
-					Id = "3FD44B89-F9D3-49BC-ABDF-33DAF9B90870",
-					Name = "Yuriy Dold-Mychailyck"
-				},
-				new Author
-				{
-					Id = "DCA81070-3A59-4033-8F9A-D8AF18A19C9D",
-					Name = "Andrew Troelsen"
-				}
-			];
+			_bookRepository = bookRepository;
 		}
 
-		public bool AddAuthor(Author author)
+		public async Task<bool> AddAuthor(Author author)
 		{
 			author.Id = Guid.NewGuid().ToString();
-			_authors.Add(author);
+			await _bookRepository.AddAuthor(author);
 			return true;
 		}
 
-		public bool DeleteAuthorById(string id)
+		public async Task<bool> DeleteAuthorById(string id)
 		{
-			var author = GetAuthorById(id);
-
-			if (author != null)
-			{
-				return _authors.Remove(author);
-			}
-			return false;
+			return await _bookRepository.DeleteAuthorById(id);
 		}
 
-		public List<Author> GetAllAuthors()
+		public async Task<List<Author>> GetAllAuthors()
 		{
-			return _authors;
+			return await _bookRepository.GetAllAuthors();
 		}
 
-		public Author? GetAuthorById(string id)
+		public async Task<Author?> GetAuthorById(string id)
 		{
-			return _authors.FirstOrDefault(a => a.Id == id);
+			return await _bookRepository.GetAuthorById(id);
 		}
 
-		public bool UpdateAuthor(Author author, string authorId)
+		public async Task<bool> UpdateAuthor(Author author, string authorId)
 		{
-			var authorToUpdate = _authors.FirstOrDefault(a => a.Id == authorId);
-
-			if (authorToUpdate != null)
-			{
-				authorToUpdate.Name = author.Name;
-				return true;
-			}
-
-			return false;
+			return await _bookRepository.UpdateAuthor(author);
 		}
 	}
 }

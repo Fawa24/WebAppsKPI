@@ -18,9 +18,9 @@ namespace Lab_1.Controllers
 		/// </summary>
 		/// <returns>All the authors from the storage</returns>
 		[HttpGet("authors/")]
-		public ActionResult<List<Author>> GetAllAuthors()
+		public async Task<ActionResult<List<Author>>> GetAllAuthorsAsync()
 		{
-			return Ok(_authorsService.GetAllAuthors());
+			return Ok(await _authorsService.GetAllAuthors());
 		}
 
 		/// <summary>
@@ -29,9 +29,9 @@ namespace Lab_1.Controllers
 		/// <param name="id">ID of the author to return</param>
 		/// <returns>Author with the specified ID</returns>
 		[HttpGet("authors/{id}")]
-		public ActionResult<Author> GetAuthorById(string id)
+		public async Task<ActionResult<Author>> GetAuthorByIdAsync(string id)
 		{
-			var author = _authorsService.GetAuthorById(id);
+			var author = await _authorsService.GetAuthorById(id);
 
 			if (author == null)
 			{
@@ -47,9 +47,9 @@ namespace Lab_1.Controllers
 		/// <param name="author">Author to add</param>
 		/// <returns>Nothing</returns>
 		[HttpPost("authors/")]
-		public ActionResult AddAuthor([FromBody] Author author)
+		public async Task<ActionResult> AddAuthorAsync([FromBody] Author author)
 		{
-			if (_authorsService.AddAuthor(author))
+			if (await _authorsService.AddAuthor(author))
 			{
 				return Ok("Added successfully");
 			}
@@ -63,9 +63,9 @@ namespace Lab_1.Controllers
 		/// <param name="id">ID of the author to delete</param>
 		/// <returns>Nothing</returns>
 		[HttpDelete("authors/{id}")]
-		public ActionResult DeleteAuthor(string id)
+		public async Task<ActionResult> DeleteAuthorAsync(string id)
 		{
-			if (_authorsService.DeleteAuthorById(id))
+			if (await _authorsService.DeleteAuthorById(id))
 			{
 				return Ok("Deleted successfully");
 			}
@@ -80,9 +80,9 @@ namespace Lab_1.Controllers
 		/// <param name="id">ID of the author to update</param>
 		/// <returns>Nothing</returns>
 		[HttpPut("authors/{id}")]
-		public ActionResult UpdateAuthor([FromBody] Author author, string id)
+		public async Task<ActionResult> UpdateAuthorAsync([FromBody] Author author, string id)
 		{
-			if (_authorsService.UpdateAuthor(author, id))
+			if (await _authorsService.UpdateAuthor(author, id))
 			{
 				return Ok("Updated successfuly");
 			}

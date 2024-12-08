@@ -4,10 +4,10 @@ namespace Lab_1.Interfaces
 {
 	public interface IBooksService
 	{
-		public List<Book> GetAllBooks();
-		public Book? GetBookById(string id);
-		public bool DeleteBookById(string id);
-		public bool AddBook(Book book);
-		public bool UpdateBook(Book book, string bookId);
+		public Task<List<Book>> GetAllBooks();
+		public Task<Book?> GetBookById(string id);
+		public Task<bool> DeleteBookById(string id);
+		public Task<bool> AddBook(Book book);
+		public Task<bool> UpdateBook(Book book, string bookId);
 	}
 }

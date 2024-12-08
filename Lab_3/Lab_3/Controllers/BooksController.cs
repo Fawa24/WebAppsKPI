@@ -1,6 +1,7 @@
 ﻿using Lab_1.Interfaces;
 using Lab_2.Filters;
 using Lab_2.Models.DTOs;
+using Lab_3.Configs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -10,7 +11,6 @@ namespace Lab_1.Controllers
 	{
 		private readonly IMemoryCache _cache;
 		private readonly IBooksService _booksService;
-		private readonly string BooksCacheKey = "books_list";
 
 		public BooksController(IMemoryCache cache
 			, IBooksService booksService)
@@ -26,14 +26,16 @@ namespace Lab_1.Controllers
 		[HttpGet("books/")]
 		public async Task<ActionResult<List<GetBookDTO>>> GetAllBooksAsync()
 		{
-			if (_cache.TryGetValue(BooksCacheKey, out List<GetBookDTO> books))
+			if (_cache.TryGetValue(AppConfig.Config.BooksCacheKey, out List<GetBookDTO> books))
 			{
 				return Ok(books);
 			}
 
 			books = await _booksService.GetAllBooks();
-
-			_cache.Set(BooksCacheKey, books, TimeSpan.FromMinutes(5));
+			if (AppConfig.Config.CacheEnabled)
+			{
+				_cache.Set(AppConfig.Config.BooksCacheKey, books, TimeSpan.FromMinutes(5));
+			}
 
 			return Ok(books);
 		}
@@ -67,7 +69,7 @@ namespace Lab_1.Controllers
 		{
 			if (await _booksService.AddBook(book))
 			{
-				_cache.Remove(BooksCacheKey);
+				_cache.Remove(AppConfig.Config.BooksCacheKey);
 				return Ok("Added successfully");
 			}
 
@@ -84,7 +86,7 @@ namespace Lab_1.Controllers
 		{
 			if (await _booksService.DeleteBookById(id))
 			{
-				_cache.Remove(BooksCacheKey);
+				_cache.Remove(AppConfig.Config.BooksCacheKey);
 				return Ok("Deleted successfully");
 			}
 
@@ -102,7 +104,7 @@ namespace Lab_1.Controllers
 		{
 			if (await _booksService.UpdateBook(id, book))
 			{
-				_cache.Remove(BooksCacheKey);
+				_cache.Remove(AppConfig.Config.BooksCacheKey);
 				return Ok("Updated successfuly");
 			}
 			return BadRequest("Something went wrong");

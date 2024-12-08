@@ -3,6 +3,8 @@ using Lab_1.Services;
 using Lab_2.Databases;
 using Lab_2.Interfaces;
 using Lab_2.Repositories;
+using Lab_3.Interfaces;
+using Lab_3.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -22,6 +24,7 @@ builder.Services.AddDbContext<BooksDbContext>(options =>
 {
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddSingleton<IConfigurationService, ConfigurationService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IAuthorsService, AuthorService>();
 builder.Services.AddScoped<IBooksService, BooksService>();

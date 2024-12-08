@@ -1,0 +1,5 @@
+{
+	"CacheEnabled": true,
+	"AuthorsCacheKey": "authors_list",
+	"BooksCacheKey": "books_list"
+}

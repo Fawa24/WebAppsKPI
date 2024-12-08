@@ -4,9 +4,18 @@ using Lab_2.Databases;
 using Lab_2.Interfaces;
 using Lab_2.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Log.Logger = new LoggerConfiguration()
+	.MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+	.MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
+	.MinimumLevel.Information()
+	.WriteTo.File("Logs/logs.txt", rollingInterval: RollingInterval.Day)
+	.CreateLogger();
+
+builder.Host.UseSerilog();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<BooksDbContext>(options =>
 {

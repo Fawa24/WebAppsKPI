@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lab_2</name>
+    </assembly>
+    <members>
+        <member name="M:Lab_1.Controllers.AuthorsController.GetAllAuthorsAsync">
+            <summary>
+            Returns all the existing authors
+            </summary>
+            <returns>All the authors from the storage</returns>
+        </member>
+        <member name="M:Lab_1.Controllers.AuthorsController.GetAuthorByIdAsync(System.String)">
+            <summary>
+            Returns the author with certain ID
+            </summary>
+            <param name="id">ID of the author to return</param>
+            <returns>Author with the specified ID</returns>
+        </member>
+        <member name="M:Lab_1.Controllers.AuthorsController.AddAuthorAsync(Lab_2.Models.DTOs.AddAuthorDTO)">
+            <summary>
+            Adds new author to the storage
+            </summary>
+            <param name="author">Author to add</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Lab_1.Controllers.AuthorsController.DeleteAuthorAsync(System.String)">
+            <summary>
+            Deletes existing author by specified ID
+            </summary>
+            <param name="id">ID of the author to delete</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Lab_1.Controllers.AuthorsController.UpdateAuthorAsync(Lab_2.Models.DTOs.UpdateAuthorDTO,System.String)">
+            <summary>
+            Updates author's info
+            </summary>
+            <param name="author">New author's fileds</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Lab_1.Controllers.BooksController.GetAllBooksAsync">
+            <summary>
+            Returns all the existing books
+            </summary>
+            <returns>All the books from the storage</returns>
+        </member>
+        <member name="M:Lab_1.Controllers.BooksController.GetBookById(System.String)">
+            <summary>
+            Returns the book with certain ID
+            </summary>
+            <param name="id">ID of the book to return</param>
+            <returns>Book with the specified ID</returns>
+        </member>
+        <member name="M:Lab_1.Controllers.BooksController.AddBook(Lab_2.Models.DTOs.AddBookDTO)">
+            <summary>
+            Adds new book to the storage
+            </summary>
+            <param name="book">Book to add</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Lab_1.Controllers.BooksController.DeleteBookById(System.String)">
+            <summary>
+            Deletes existing book by specified ID
+            </summary>
+            <param name="id">ID of the book to delete</param>s
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Lab_1.Controllers.BooksController.UpdateBookAsync(Lab_2.Models.DTOs.UpdateBookDTO,System.String)">
+            <summary>
+            Updates book's info
+            </summary>
+            <param name="book">New book's fields</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="T:Lab_2.Databases.Migrations.InitialMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:Lab_2.Databases.Migrations.InitialMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Lab_2.Databases.Migrations.InitialMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Lab_2.Databases.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
